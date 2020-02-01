@@ -1,8 +1,12 @@
+// `DEPLOY_ENV` が `GH_PAGES` の場合のみ `router.base = '/<repository-name>/'` を追加する
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/meetup-result/'
+  },
+} : {}
 
 export default {
-  // router: {
-  //   base: '/meetup-result/'
-  // },
+  ...routerBase,
   mode: 'spa',
   /*
   ** Headers of the page
