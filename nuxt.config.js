@@ -1,5 +1,8 @@
 
 export default {
+  router: {
+    base: '/meetup-result/'
+  },
   mode: 'spa',
   /*
   ** Headers of the page
