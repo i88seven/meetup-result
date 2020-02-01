@@ -66,6 +66,18 @@ export default {
       this.stopButtonActive = false;
       this.fetchResults().then(() => {
         this.stopButtonActive = true;
+      }).catch(() => {
+        this.stopInterval();
+        this.$notify.error({
+          title: 'エラー',
+          message: '点数の読み込みに失敗しました...'
+        });
+        this.teamResults = this.teamResults.map(teamResult => {
+          return {
+            teamName: teamResult.teamName,
+            point: 0,
+          }
+        });
       });
       this.interval = setInterval(() => {
         const randVal = Math.ceil(Math.random() * 90) + 10
@@ -75,8 +87,7 @@ export default {
       }, 20);
     },
     stop() {
-      clearInterval(this.interval);
-      this.interval = 0;
+      this.stopInterval();
       this.teamResults = this.teamResults.map((teamResult, i) => {
         return {
           teamName: teamResult.teamName,
@@ -84,8 +95,13 @@ export default {
         }
       });
     },
+    stopInterval() {
+      clearInterval(this.interval);
+      this.interval = 0;
+    },
     async fetchResults() {
-      this.fetchedData = await this.$axios.$get('https://script.google.com/macros/s/$API_NAME/exec');
+      const gasApi = process.env.GAS_API;
+      this.fetchedData = await this.$axios.$get(`https://script.google.com/macros/s/${gasApi}/exec`);
     },
   }
 };

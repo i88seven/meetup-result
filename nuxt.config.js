@@ -1,5 +1,8 @@
 
 export default {
+  // router: {
+  //   base: '/meetup-result/'
+  // },
   mode: 'spa',
   /*
   ** Headers of the page
@@ -35,6 +38,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
