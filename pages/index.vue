@@ -27,6 +27,7 @@
       </el-button>
       <el-button
         @click="stop"
+        :disabled="!stopButtonActive"
       >
         stop
       </el-button>
@@ -45,6 +46,8 @@ export default {
     return {
       teamResults: [],
       interval: 0,
+      stopButtonActive: false,
+      fetchedData: [],
     }
   },
   created() {
@@ -60,6 +63,10 @@ export default {
       if (this.interval) {
         return;
       }
+      this.stopButtonActive = false;
+      this.fetchResults().then(() => {
+        this.stopButtonActive = true;
+      });
       this.interval = setInterval(() => {
         const randVal = Math.ceil(Math.random() * 90) + 10
         this.teamResults.forEach((teamResult) => {
@@ -70,45 +77,16 @@ export default {
     stop() {
       clearInterval(this.interval);
       this.interval = 0;
-      this.teamResults = [
-        {
-          teamName: 'A',
-          point: 1,
-        },
-        {
-          teamName: 'B',
-          point: 0,
-        },
-        {
-          teamName: 'C',
-          point: 1,
-        },
-        {
-          teamName: 'D',
-          point: 0,
-        },
-        {
-          teamName: 'E',
-          point: 0,
-        },
-        {
-          teamName: 'F',
-          point: 0,
-        },
-        {
-          teamName: 'G',
-          point: 0,
-        },
-        {
-          teamName: 'H',
-          point: 0,
-        },
-        {
-          teamName: 'I',
-          point: 0,
-        },
-      ];
-    }
+      this.teamResults = this.teamResults.map((teamResult, i) => {
+        return {
+          teamName: teamResult.teamName,
+          point: this.fetchedData[i],
+        }
+      });
+    },
+    async fetchResults() {
+      this.fetchedData = await this.$axios.$get('https://script.google.com/macros/s/$API_NAME/exec');
+    },
   }
 };
 </script>

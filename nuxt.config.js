@@ -1,8 +1,5 @@
 
 export default {
-  router: {
-    base: '/meetup-result/'
-  },
   mode: 'spa',
   /*
   ** Headers of the page
@@ -43,7 +40,11 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
   ],
+  axios: {
+    // proxyHeaders: false
+  },
   /*
   ** Build configuration
   */
