@@ -9,6 +9,7 @@
         :key="teamResult.teamName"
         :team-name="teamResult.teamName"
         :point="teamResult.point"
+        :diff="teamResult.diff"
       />
     </div>
     <div class="result-row">
@@ -17,6 +18,7 @@
         :key="teamResult.teamName"
         :team-name="teamResult.teamName"
         :point="teamResult.point"
+        :diff="teamResult.diff"
       />
     </div>
     <div class="footer">
@@ -83,6 +85,9 @@ export default {
           }
         });
       });
+      this.teamResults.forEach((teamResult) => {
+        delete teamResult.diff;
+      })
       this.interval = setInterval(() => {
         const randVal = Math.ceil(Math.random() * 90) + 10
         this.teamResults.forEach((teamResult) => {
@@ -95,7 +100,8 @@ export default {
       this.teamResults = this.teamResults.map((teamResult, i) => {
         return {
           teamName: teamResult.teamName,
-          point: this.fetchedData[i],
+          point: this.fetchedData[0][i],
+          diff: this.fetchedData[1][i],
         }
       });
     },
