@@ -57,6 +57,10 @@ export default {
         point: 0,
       });
     }
+    this.teamResults.push({
+      teamName: 'Hangout',
+      point: 0,
+    });
   },
   methods: {
     start() {
